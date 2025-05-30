@@ -82,26 +82,17 @@ convertButton.addEventListener("click", convertText);
 function convertText() {
   var inputValue = inputTextArea.value;
   inputValue = fixArabicLetters(inputValue);
-  console.log(inputValue);
   var result = "";
   for (var i = 0; i < inputValue.length; i++) {
     var letter = inputValue[i];
     var value = corresponding[letter];
-    console.log(letter, value);
     if (isAlef(letter)) {
-      console.log("isalef");
       if (
         isFirstWordLetter(inputValue, i) ||
         noConnectPrev(inputValue[i - 1])
-      ) {
-        console.log(
-          "check",
-          !i,
-          isLastWordLetter(inputValue, i - 1),
-          noConnectPrev(inputValue[i - 1])
-        );
+      ) 
         value = value.toUpperCase();
-      }
+      
     } else if (letter === "ة") {
       if (noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
     } else if (letter === "ل" && !isLastWordLetter(inputValue, i)) {
