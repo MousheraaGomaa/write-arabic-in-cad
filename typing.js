@@ -48,19 +48,19 @@ const corresponding = {
   "٧": "7",
   "٨": "8",
   "٩": "9",
-  0:"0",
-  1:"1",
-  2:"2",
-  3:"3",
-  4:"4",
-  5:"5",
-  6:"6",
-  7:"7",
-  8:"8",
-  9:"9",
+  0: "0",
+  1: "1",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
   "\n": " ",
   "/": " \\  ",
-  "-": " - ",
+  "-": " -  ",
   _: "_",
   "–": " - ",
   "%": "%",
@@ -89,7 +89,19 @@ function convertText() {
     var value = corresponding[letter];
     console.log(letter, value);
     if (isAlef(letter)) {
-      if (!i || !isLastWordLetter(inputValue[i - 1]) || noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
+      console.log("isalef");
+      if (
+        isFirstWordLetter(inputValue, i) ||
+        noConnectPrev(inputValue[i - 1])
+      ) {
+        console.log(
+          "check",
+          !i,
+          isLastWordLetter(inputValue, i - 1),
+          noConnectPrev(inputValue[i - 1])
+        );
+        value = value.toUpperCase();
+      }
     } else if (letter === "ة") {
       if (noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
     } else if (letter === "ل" && !isLastWordLetter(inputValue, i)) {
@@ -99,7 +111,7 @@ function convertText() {
         if (noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
         i++;
       }
-    } else if (isLastWordLetter(inputValue, i) ) {
+    } else if (isLastWordLetter(inputValue, i)) {
       if (value === "{" || value === ":") value = symbolMap[value];
       else {
         value = value.toUpperCase();
@@ -115,7 +127,7 @@ function fixArabicLetters(arabicText) {
     .replace(/[\.\n]/g, " ")
     .replace(/–/g, "-")
     .replace(/ـ/g, "")
-    .replace(/\s+/g," ")
+    .replace(/\s+/g, " ")
     .replace(/إ/g, "ا");
 }
 function isLastWordLetter(arabicText, index) {
@@ -124,6 +136,10 @@ function isLastWordLetter(arabicText, index) {
     wordEndMark.includes(arabicText[index + 1])
   )
     return true;
+  return false;
+}
+function isFirstWordLetter(arabicText, index) {
+  if (index === 0 || wordEndMark.includes(arabicText[index - 1])) return true;
   return false;
 }
 function isLaa(letter, nextLetter) {
