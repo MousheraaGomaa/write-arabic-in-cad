@@ -18,25 +18,35 @@
      background-color: var(--Dark-Gunmetal);
      font-family: "Montserrat", Helvetica, Arial, serif;
  }
-button{
-    height: 40px;
-    width: 80%;
-    outline: 0;
-    margin: auto;
-}
-button {
-    margin-block: 20px 10px;
-    z-index: 0;
-    color: white;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--Medium-Slate-Blue);
-    border-color: var(--Medium-Slate-Blue);
-}
-button:hover {
-    box-shadow: 0 8px 25px -8px var(--Medium-Slate-Blue)
-}
+
+ .heder {
+     font-family: "Italianno", cursive;
+     font-weight: 400;
+     font-style: normal;
+ }
+
+ button {
+     height: 40px;
+     width: 80%;
+     outline: 0;
+     margin: auto;
+ }
+
+ button {
+     margin-block: 20px 10px;
+     z-index: 0;
+     color: white;
+     outline: none;
+     border: none;
+     border-radius: 5px;
+     background-color: var(--Medium-Slate-Blue);
+     border-color: var(--Medium-Slate-Blue);
+ }
+
+ button:hover {
+     box-shadow: 0 8px 25px -8px var(--Medium-Slate-Blue)
+ }
+
  textarea {
      color: var(--Light-Steel-Gray) !important;
      background-color: var(--Gunmetal) !important;
@@ -60,7 +70,7 @@ button:hover {
 
 
  textarea::placeholder {
-    font-size: 1.5rem;
+     font-size: 1.5rem;
  }
 
  textarea::-webkit-input-placeholder {

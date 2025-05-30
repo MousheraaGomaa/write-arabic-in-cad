@@ -38,7 +38,27 @@ const corresponding = {
   و: ",",
   ز: ">",
   ظ: "/",
-  "\n":" ",
+  "٠": "0",
+  "١": "1",
+  "٢": "2",
+  "٣": "3",
+  "٤": "4",
+  "٥": "5",
+  "٦": "6",
+  "٧": "7",
+  "٨": "8",
+  "٩": "9",
+  0:"0",
+  1:"1",
+  2:"2",
+  3:"3",
+  4:"4",
+  5:"5",
+  6:"6",
+  7:"7",
+  8:"8",
+  9:"9",
+  "\n": " ",
   "/": " \\  ",
   "-": " - ",
   _: "_",
@@ -47,10 +67,10 @@ const corresponding = {
   "(": "(",
   " ": " ",
 };
-const symbolMap = {"{":"[",":":";"};
-const nonConnectingLetters = ["ا", "أ", "إ", "آ","د", "ذ", "ر", "ز", "و"];
+const symbolMap = { "{": "[", ":": ";" };
+const nonConnectingLetters = ["ا", "أ", "إ", "آ", "د", "ذ", "ر", "ز", "و"];
 const alefForms = ["ا", "أ", "إ", "آ"];
-const wordEndMark = [" ", "–", "-", "_","\n"];
+const wordEndMark = [" ", "–", "-", "_", "\n"];
 const laaForms = ["لإ", "لأ", "لا", "لآ"];
 
 const inputTextArea = document.getElementById("arabicText");
@@ -62,29 +82,26 @@ convertButton.addEventListener("click", convertText);
 function convertText() {
   var inputValue = inputTextArea.value;
   inputValue = fixArabicLetters(inputValue);
+  console.log(inputValue);
   var result = "";
   for (var i = 0; i < inputValue.length; i++) {
     var letter = inputValue[i];
     var value = corresponding[letter];
-    if(isAlef(letter)){
-      if(i || noConnectPrev(inputValue[i-1])) value= value.toUpperCase();
-    }
-    else if(letter === "ة" ){
-      if(noConnectPrev(inputValue[i-1])) value= value.toUpperCase();
-    }
-    else if(letter ==="ل" && !isLastWordLetter(inputValue,i)){
-      if(isLaa(letter,inputValue[i+1])){
-        letter = letter+"ا";//  letter = letter+inputValue[i+1]  to know how to write  لآ
+    console.log(letter, value);
+    if (isAlef(letter)) {
+      if (!i || !isLastWordLetter(inputValue[i - 1]) || noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
+    } else if (letter === "ة") {
+      if (noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
+    } else if (letter === "ل" && !isLastWordLetter(inputValue, i)) {
+      if (isLaa(letter, inputValue[i + 1])) {
+        letter = letter + "ا"; //  letter = letter+inputValue[i+1]  to know how to write  لآ
         value = corresponding[letter];
-        if(noConnectPrev(inputValue[i-1]))
-          value = value.toUpperCase();
+        if (noConnectPrev(inputValue[i - 1])) value = value.toUpperCase();
         i++;
       }
-    }
-    else if(isLastWordLetter(inputValue,i)){
-      if(value ==="{" || value === ":")
-        value = symbolMap[value];
-      else{
+    } else if (isLastWordLetter(inputValue, i) ) {
+      if (value === "{" || value === ":") value = symbolMap[value];
+      else {
         value = value.toUpperCase();
       }
     }
@@ -94,10 +111,18 @@ function convertText() {
 }
 
 function fixArabicLetters(arabicText) {
-  return arabicText.replace(/\./g, " ").replace(/–/g, "-").replace(/إ/g, "ا");
+  return arabicText
+    .replace(/[\.\n]/g, " ")
+    .replace(/–/g, "-")
+    .replace(/ـ/g, "")
+    .replace(/\s+/g," ")
+    .replace(/إ/g, "ا");
 }
 function isLastWordLetter(arabicText, index) {
-  if (index === arabicText.length - 1 || wordEndMark.includes(arabicText[index+1]))
+  if (
+    index === arabicText.length - 1 ||
+    wordEndMark.includes(arabicText[index + 1])
+  )
     return true;
   return false;
 }
@@ -106,11 +131,11 @@ function isLaa(letter, nextLetter) {
   if (laaForms.includes(text)) return true;
   return false;
 }
-function isAlef(letter){
+function isAlef(letter) {
   return alefForms.includes(letter);
 }
-function noConnectPrev(prevLetter){
-  return nonConnectingLetters.includes(prevLetter)
+function noConnectPrev(prevLetter) {
+  return nonConnectingLetters.includes(prevLetter);
 }
 
 // //ا not correcr لآ space   لا== B  يلا= b  ة   - (ةووا)
